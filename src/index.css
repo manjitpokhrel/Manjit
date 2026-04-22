@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #F4EFE8;
+  --color-brand-text: #18120E;
+  --color-brand-accent: #3B2215;
+  --color-brand-muted: #A8A29E;
+
+  --font-heading: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Georgia', 'Times New Roman', serif;
+  --font-mono: 'Courier New', Courier, monospace;
+}
+
+@layer base {
+  * {
+    @apply border-brand-muted/30;
+  }
+
+  body {
+    @apply bg-brand-bg text-brand-text font-body leading-relaxed antialiased selection:bg-brand-accent selection:text-brand-bg;
+  }
+
+  h1 {
+    @apply text-[64px] leading-none font-normal tracking-[-0.02em] mb-2 font-heading;
+  }
+
+  h2 {
+    @apply font-heading text-[32px] leading-tight;
+  }
+
+  section {
+    @apply py-12 md:py-16;
+  }
+}
+
+@layer components {
+  .section-label {
+    @apply font-mono text-[10px] uppercase tracking-widest text-brand-accent border-b border-brand-muted/50 pb-1 mb-4 block;
+  }
+
+  .nav-blur {
+    @apply backdrop-blur-md bg-brand-bg/90 border-b border-brand-text/10;
+  }
+
+  .tag {
+    @apply inline-block font-mono text-[9px] px-1.5 py-0.5 border border-brand-muted/50 rounded-full text-brand-muted uppercase tracking-tighter;
+  }
+
+  .ink-border {
+    @apply border-b border-brand-text/10;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
