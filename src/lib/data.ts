@@ -65,12 +65,12 @@ export const projects: Project[] = [
     title: 'Movie Recommendation Bot',
     badge: 'Software',
     highlights: [
-      'Content-based engine using TMDB API',
+      'Content-based engine using TMDB data',
       'Semantic similarity + rating-based ranking',
       'Real-time concurrent Discord implementation',
     ],
-    tags: ['FastAPI', 'Discord API', 'NLP', 'Semantic Search'],
-    fullDescription: 'A sophisticated movie recommendation system built into a Discord bot. It utilizes a content-based recommendation engine powered by data from the TMDB API. The system calculates semantic similarity between movies to provide relevant suggestions, combined with a weighted rating-based ranking algorithm. The bot is designed for concurrent, real-time interaction using FastAPI on the backend.',
+    tags: ['NLP', 'Semantic Search'],
+    fullDescription: 'A sophisticated movie recommendation system built into a Discord bot. It utilizes a content-based recommendation engine powered by data from TMDB. The system calculates semantic similarity between movies to provide relevant suggestions, combined with a weighted rating-based ranking algorithm. The bot is designed for concurrent, real-time interaction.',
   },
 ];
 
@@ -102,7 +102,7 @@ export const skills: Skill[] = [
   },
   {
     category: 'Tools',
-    items: ['Linux', 'Git', 'CUDA', 'OpenCV', 'FastAPI', 'Next.js', 'React'],
+    items: ['Linux', 'Git', 'CUDA', 'OpenCV', 'Next.js', 'React'],
   },
 ];
 
