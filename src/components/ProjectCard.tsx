@@ -15,8 +15,14 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.01, y: -2 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.8 }}
+      transition={{ 
+        delay: index * 0.1, 
+        duration: 0.8,
+        scale: { duration: 0.2 },
+        y: { duration: 0.2 }
+      }}
       className="group project-item mb-8"
     >
       <Link to={`/projects/${project.slug}`} className="block">

@@ -1,13 +1,34 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { experiences } from '../lib/data';
+import React, { useState, useEffect } from 'react';
+import { experiences as staticData } from '../lib/data';
+import { db } from '../lib/firebase';
+import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 
 export default function Experience() {
+  const [items, setItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const q = query(collection(db, 'experiences'), orderBy('order', 'asc'));
+        const snapshot = await getDocs(q);
+        if (!snapshot.empty) {
+          setItems(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        } else {
+          setItems(staticData);
+        }
+      } catch (error) {
+        console.error('Error fetching experiences:', error);
+        setItems(staticData);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <section id="experience" className="py-0!">
       <span className="section-label">Experience</span>
       <div className="flex flex-col gap-8">
-        {experiences.map((exp, index) => (
+        {items.map((exp, index) => (
           <div key={index}>
             <div className="flex justify-between items-baseline mb-1">
               <h4 className="text-sm font-body font-bold">{exp.role}</h4>

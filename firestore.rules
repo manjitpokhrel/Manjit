@@ -1,0 +1,111 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'manjitpokhrel21@gmail.com' && 
+        request.auth.token.email_verified == true
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Validation helpers
+    function isValidProject(data) {
+      return data.keys().hasAll(['title', 'slug', 'badge', 'highlights', 'tags', 'fullDescription']) &&
+             data.title is string && data.title.size() <= 200 &&
+             data.slug is string && data.slug.size() <= 200 &&
+             data.badge is string && data.badge.size() <= 50 &&
+             data.highlights is list &&
+             data.tags is list &&
+             data.fullDescription is string && data.fullDescription.size() <= 5000;
+    }
+
+    function isValidExperience(data) {
+      return data.keys().hasAll(['role', 'company', 'period', 'description']) &&
+             data.role is string && data.role.size() <= 200 &&
+             data.company is string && data.company.size() <= 200 &&
+             data.period is string && data.period.size() <= 100 &&
+             data.description is string && data.description.size() <= 2000;
+    }
+
+    function isValidEducation(data) {
+      return data.keys().hasAll(['degree', 'institution', 'period', 'focus']) &&
+             data.degree is string && data.degree.size() <= 200 &&
+             data.institution is string && data.institution.size() <= 200 &&
+             data.period is string && data.period.size() <= 100 &&
+             data.focus is string && data.focus.size() <= 500;
+    }
+
+    function isValidSkillGroup(data) {
+      return data.keys().hasAll(['category', 'items']) &&
+             data.category is string && data.category.size() <= 100 &&
+             data.items is list;
+    }
+
+    function isValidBlog(data) {
+      return data.keys().hasAll(['title', 'excerpt', 'date', 'url']) &&
+             data.title is string && data.title.size() <= 300 &&
+             data.excerpt is string && data.excerpt.size() <= 1000 &&
+             data.date is string &&
+             data.url is string && data.url.size() <= 500;
+    }
+
+    function isValidProfile(data) {
+      return data.name is string && data.bio is string;
+    }
+
+    // Rules for collections
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidProject(request.resource.data);
+      allow update: if isAdmin() && isValidProject(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /experiences/{expId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidExperience(request.resource.data);
+      allow update: if isAdmin() && isValidExperience(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /education/{eduId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidEducation(request.resource.data);
+      allow update: if isAdmin() && isValidEducation(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /skills/{skillId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidSkillGroup(request.resource.data);
+      allow update: if isAdmin() && isValidSkillGroup(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /blogs/{blogId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidBlog(request.resource.data);
+      allow update: if isAdmin() && isValidBlog(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /profile/{profileId} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidProfile(request.resource.data);
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "A portfolio project entry.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "badge": { "type": "string" },
+        "highlights": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "fullDescription": { "type": "string" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "slug", "badge", "highlights", "tags", "fullDescription"]
+    },
+    "Experience": {
+      "title": "Experience",
+      "description": "Professional experience entry.",
+      "type": "object",
+      "properties": {
+        "role": { "type": "string" },
+        "company": { "type": "string" },
+        "period": { "type": "string" },
+        "description": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["role", "company", "period", "description"]
+    },
+    "Education": {
+      "title": "Education",
+      "description": "Educational background entry.",
+      "type": "object",
+      "properties": {
+        "degree": { "type": "string" },
+        "institution": { "type": "string" },
+        "period": { "type": "string" },
+        "focus": { "type": "string" },
+        "concentration": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["degree", "institution", "period", "focus"]
+    },
+    "SkillGroup": {
+      "title": "Skill Group",
+      "description": "A category of skills.",
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "items": { "type": "array", "items": { "type": "string" } },
+        "order": { "type": "number" }
+      },
+      "required": ["category", "items"]
+    },
+    "Blog": {
+      "title": "Blog",
+      "description": "A blog post reference.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "url": { "type": "string" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "excerpt", "date", "url"]
+    },
+    "Profile": {
+      "title": "Profile",
+      "description": "Personal profile information.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "location": { "type": "string" },
+        "email": { "type": "string" },
+        "github": { "type": "string" },
+        "linkedin": { "type": "string" },
+        "x": { "type": "string" },
+        "website": { "type": "string" },
+        "bio": { "type": "string" },
+        "currentFocus": { "type": "string" },
+        "researchInterests": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "firestore": {
+    "projects": {
+      "schema": "Project",
+      "description": "Collection of projects shown on the portfolio."
+    },
+    "experiences": {
+      "schema": "Experience",
+      "description": "Professional experience list."
+    },
+    "education": {
+      "schema": "Education",
+      "description": "Educational history."
+    },
+    "skills": {
+      "schema": "SkillGroup",
+      "description": "Categorized skill toolkit."
+    },
+    "blogs": {
+      "schema": "Blog",
+      "description": "List of blog posts with external links."
+    },
+    "profile": {
+      "schema": "Profile",
+      "description": "Personal info and research interests."
+    }
+  }
+}

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { personalInfo } from '../lib/data';
 
 const sections = [
-  { name: 'Interests', id: 'interests' },
   { name: 'Projects', id: 'projects' },
+  { name: 'Blogs', id: 'blogs', type: 'link', path: '/blogs' },
   { name: 'Experience', id: 'experience' },
   { name: 'Skills', id: 'skills' },
   { name: 'Education', id: 'education' },
@@ -11,8 +12,15 @@ const sections = [
 
 export default function Nav() {
   const [activeSection, setActiveSection] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (location.pathname !== '/') {
+      setActiveSection(location.pathname.startsWith('/blogs') ? 'blogs' : '');
+      return;
+    }
+
     const observerOptions = {
       root: null,
       rootMargin: '-20% 0px -70% 0px',
@@ -30,15 +38,27 @@ export default function Nav() {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
     sections.forEach((section) => {
-      const element = document.getElementById(section.id);
-      if (element) observer.observe(element);
+      if (section.type !== 'link') {
+        const element = document.getElementById(section.id);
+        if (element) observer.observe(element);
+      }
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [location.pathname]);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
+  const handleNavClick = (section: any) => {
+    if (section.type === 'link') {
+      navigate(section.path);
+      return;
+    }
+
+    if (location.pathname !== '/') {
+      navigate('/#' + section.id);
+      return;
+    }
+
+    const element = document.getElementById(section.id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
@@ -50,7 +70,7 @@ export default function Nav() {
         {sections.map((section) => (
           <button
             key={section.id}
-            onClick={() => scrollToSection(section.id)}
+            onClick={() => handleNavClick(section)}
             className={`font-mono text-[11px] uppercase tracking-widest transition-colors ${
               activeSection === section.id
                 ? 'text-brand-accent font-bold'

@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import HomePage from './pages/HomePage';
 import ProjectPage from './pages/ProjectPage';
+import Dashboard from './pages/Dashboard';
+import BlogsPage from './pages/BlogsPage';
 import LoadingScreen from './components/LoadingScreen';
 
 function AnimatedRoutes() {
@@ -20,6 +22,8 @@ function AnimatedRoutes() {
         <Routes location={location}>
           <Route path="/" element={<HomePage />} />
           <Route path="/projects/:slug" element={<ProjectPage />} />
+          <Route path="/blogs" element={<BlogsPage />} />
+          <Route path="/admin" element={<Dashboard />} />
         </Routes>
       </motion.div>
     </AnimatePresence>

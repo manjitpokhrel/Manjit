@@ -33,3 +33,22 @@ export interface Education {
   focus: string;
   concentration?: string;
 }
+
+export interface Blog {
+  id: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  url: string;
+  order: number;
+}
+
+export interface Publication {
+  id: string;
+  title: string;
+  meta: string;
+  doi?: string;
+  github?: string;
+  url?: string;
+  pypi?: string;
+}

@@ -1,4 +1,4 @@
-import { Project, Experience, Skill, Education } from '../types';
+import { Project, Experience, Skill, Education, Blog, Publication } from '../types';
 
 export const personalInfo = {
   name: 'Manjit Pokhrel',
@@ -8,30 +8,71 @@ export const personalInfo = {
   linkedin: 'https://linkedin.com/in/manjitpokhrel',
   x: 'https://x.com/manjitpokhrel_',
   website: 'https://manjitpokhrel.com.np',
-  bio: 'Building and breaking AI. Independent AI Security Researcher evaluating alignment robustness in open-weight models and building reproducible attack pipelines.',
+  bio: 'Adversarial ML researcher. GPU kernel optimization. Low-resource NLP security.',
 };
 
 export const researchInterests: string[] = [
   'Adversarial Machine Learning',
-  'AI Safety',
-  'Transformer Architectures',
-  'Robustness & Alignment of LLMs',
-  'AI Security',
+  'AI Safety & Alignment',
+  'Low-Resource Language Security',
+  'GPU Kernel Optimization',
+  'LLM Inference Efficiency',
+  'Mechanistic Interpretability',
+];
+
+export const publications: Publication[] = [
+  {
+    id: '1',
+    title: 'Lost in Translation: Safety Alignment Failures in Nepali and Code-Switched Variants of Instruction-Tuned Large Language Models',
+    meta: 'Pokhrel, M. · Zenodo · April 2026',
+    doi: 'https://doi.org/10.5281/zenodo.19764520',
+    github: 'https://github.com/manjitpokhrel/NASB-Nepali-Safety'
+  },
+  {
+    id: '2',
+    title: 'Google AI VRP — alignment bypass via Nepali/code-switched input in instruction-tuned LLMs',
+    meta: 'Triaged · 2026'
+  },
+  {
+    id: '3',
+    title: 'Meta Whitehat — safety asymmetry in multilingual LLM inference',
+    meta: 'Submitted · 2026'
+  },
+  {
+    id: '4',
+    title: 'GhostWeight: Training-Free Activation Sparsity for LLM Inference on Consumer Hardware',
+    meta: 'PyPI · GitHub · May 2026',
+    pypi: 'https://pypi.org/project/ghostweight/',
+    github: 'https://github.com/manjitpokhrel/GhostWeight'
+  }
 ];
 
 export const projects: Project[] = [
   {
-    id: '1',
-    slug: 'minigpt',
-    title: 'MiniGPT',
-    badge: 'Core ML',
+    id: 'p1',
+    slug: 'nasb',
+    title: 'NASB — Nepali Adversarial Safety Benchmark',
+    badge: 'RESEARCH',
     highlights: [
-      '211K param GPT transformer in pure Python/NumPy',
-      'Manual backprop and multi-head attention',
-      'Trained on 1.1M chars of Shakespeare',
+      '1,200+ adversarial probes across 5 harm categories',
+      '0% bypass in English → 73.7% in Nepali',
+      'Introduced Vajra Morphing sub-tokenization attack',
     ],
-    tags: ['Python', 'NumPy', 'Deep Learning', 'Transformers'],
-    fullDescription: 'MiniGPT is a ground-up implementation of a Generative Pre-trained Transformer. Built entirely in pure Python and NumPy without using high-level ML frameworks for the core logic, it features manual backpropagation, multi-head attention mechanisms, and positional encoding. The model was trained on a dataset of 1.1 million characters of Shakespeare, achieving a loss reduction from 4.0 to 1.6.',
+    tags: ['NEPALI-NLP', 'ADVERSARIAL-ML', 'SAFETY-ALIGNMENT', 'VAJRA-MORPHING', 'ZENODO'],
+    fullDescription: 'First structured adversarial safety benchmark for Nepali LLMs. 1,200+ adversarial probes across 5 harm categories and 5 linguistic registers. Core finding: 0% bypass in English → 73.7% in Nepali (Qwen-2.5-7B, Gemma-4, Llama-3.1-8B). Introduced Vajra Morphing — novel attack exploiting sub-tokenization gaps in Devanagari/Latin code-switching. Identified three failure modes: Semantic Drift, Persona Collapse, Politeness Override.',
+  },
+  {
+    id: 'p2',
+    slug: 'ghostweight',
+    title: 'GhostWeight',
+    badge: 'LIBRARY',
+    highlights: [
+      '38.35% to 110.53% speedup on consumer hardware',
+      '95.8% CUDA kernel efficiency',
+      'Qwen2.5-72B on single RTX 5060 (8GB)',
+    ],
+    tags: ['CUDA', 'ACTIVATION-SPARSITY', 'RTX-5060', 'BLACKWELL', 'GPU-OPTIMIZATION', 'PYPI'],
+    fullDescription: 'Training-free activation sparsity for LLM inference on consumer hardware. 27.3% of MLP neurons in Qwen2.5-7B never fire — permanently removed via static dead neuron masking. Results: +38.35% speedup at 0% perplexity cost (static mask); +74.71% speedup at threshold=0.05; +110.53% speedup at threshold=0.10. Sparse row-packing CUDA kernel: 95.8% of theoretical maximum efficiency. Ran Qwen2.5-72B on single RTX 5060 (8GB).',
   },
   {
     id: '2',
@@ -39,47 +80,49 @@ export const projects: Project[] = [
     title: 'LLM Red Teaming',
     badge: 'Security',
     highlights: [
-      'Prompt injection + jailbreak testing (Gemma, Qwen, Ollama)',
-      'Identified PII leakage and code bypasses',
-      'Triaged by Google AI VRP',
+      'Systematic prompt injection and jailbreak evaluation',
+      'Findings directly informed NASB benchmark design',
+      'Reproducible benchmarking pipeline with Unsloth',
     ],
-    tags: ['AI Security', 'Red Teaming', 'LLMs', 'VRP'],
-    fullDescription: 'Comprehensive security research focused on open-weight LLMs like Gemma, Qwen, and Ollama. This project involved developing custom prompt injection and jailbreak techniques to evaluate alignment robustness. I discovered and responsibly disclosed multiple vulnerabilities including PII leakage and restricted code generation bypasses. One of the findings was triaged by the Google AI Vulnerability Reward Program (VRP) as an alignment bypass.',
+    tags: ['AI-SECURITY', 'RED-TEAMING', 'LLMs', 'RESPONSIBLE-DISCLOSURE', 'GOOGLE-VRP'],
+    fullDescription: 'Systematic prompt injection and jailbreak evaluation across Gemma, Qwen, and Ollama. Identified PII leakage, restricted code generation bypass, and alignment failure modes. Reproducible benchmarking pipeline built with HuggingFace + Unsloth. Findings directly informed NASB benchmark design. Disclosed to Google AI VRP (triaged as alignment bypass) and Meta Whitehat.',
   },
   {
     id: '3',
     slug: 'peft-qwen',
-    title: 'Parameter-Efficient Fine-Tuning',
+    title: 'Parameter-Efficient Fine-Tuning — Attack Surface Analysis',
     badge: 'Research',
     highlights: [
-      'LoRA adapters for Qwen with CUDA acceleration',
-      'Evaluated robustness pre/post alignment tuning',
-      'Experimented with activation modifications',
+      'LoRA fine-tuning attack surface analysis on Qwen',
+      'Measured alignment robustness degradation',
+      'Identified potential supply chain attack vectors',
     ],
-    tags: ['Qwen', 'LoRA', 'PEFT', 'CUDA', 'Optimization'],
-    fullDescription: 'Investigating efficient ways to adapt large language models. This research utilized LoRA (Low-Rank Adaptation) adapters with Qwen, utilizing CUDA for hardware acceleration. The project involved a deep dive into how fine-tuning impacts the overall robustness of the model, specifically comparing performance and safety guardrails before and after alignment tuning.',
+    tags: ['LORA', 'PEFT', 'CUDA', 'SUPPLY-CHAIN-SECURITY', 'QWEN'],
+    fullDescription: 'LoRA fine-tuning attack surface analysis on Qwen. Measured alignment robustness degradation pre/post safety tuning. Identified activation modifications that produce safety bypasses surviving LoRA fine-tuning — potential supply chain attack vector in open-weight model ecosystem.',
   },
   {
-    id: '4',
-    slug: 'movie-rec-bot',
-    title: 'Movie Recommendation Bot',
-    badge: 'Software',
+    id: '1',
+    slug: 'minigpt',
+    title: 'MiniGPT',
+    badge: 'Core ML',
     highlights: [
-      'Content-based engine using TMDB data',
-      'Semantic similarity + rating-based ranking',
-      'Real-time concurrent Discord implementation',
+      '211K parameter GPT-style transformer in pure NumPy',
+      'Manual backpropagation from scratch',
+      'Built to understand transformer internals at gradient level',
     ],
-    tags: ['NLP', 'Semantic Search'],
-    fullDescription: 'A sophisticated movie recommendation system built into a Discord bot. It utilizes a content-based recommendation engine powered by data from TMDB. The system calculates semantic similarity between movies to provide relevant suggestions, combined with a weighted rating-based ranking algorithm. The bot is designed for concurrent, real-time interaction.',
+    tags: ['Python', 'NumPy', 'Deep Learning', 'Transformers'],
+    fullDescription: '211K parameter GPT-style transformer in pure NumPy — no autograd. Manual backpropagation, multi-head self-attention, positional encoding, tokenization from scratch. Trained on 1.1M character corpus. Loss: 4.0 → 1.6. Built to understand transformer internals at the gradient level before working with production LLMs.',
   },
 ];
+
+export const blogs: Blog[] = [];
 
 export const experiences: Experience[] = [
   {
     role: 'Independent AI Security Researcher',
     company: 'Self-employed',
-    period: '2024 - Present',
-    description: 'Evaluating alignment robustness in open-weight LLMs, building reproducible attack pipelines, and conducting responsible disclosure to vendors.',
+    period: 'Late 2025 – Present',
+    description: 'Introduced NASB — first adversarial safety benchmark for Nepali LLMs: 73.7% bypass rate in Nepali vs 0% in English. Coined Vajra Morphing: novel sub-tokenization attack via Devanagari/Latin code-switching. Published on Zenodo (DOI: 10.5281/zenodo.19764520). Disclosed to Google AI VRP (triaged) and Meta Whitehat. Built GhostWeight — training-free LLM inference optimization: 110% speedup on RTX 5060 via activation sparsity, 95.8% kernel efficiency. Published on PyPI May 2026.',
   },
 ];
 
@@ -89,20 +132,24 @@ export const skills: Skill[] = [
     items: ['Python', 'C++', 'JavaScript', 'SQL'],
   },
   {
-    category: 'ML Frameworks',
-    items: ['PyTorch', 'TensorFlow', 'NumPy', 'HuggingFace', 'PEFT', 'Unsloth'],
+    category: 'ML & Research Tools',
+    items: ['PyTorch', 'NumPy', 'HuggingFace', 'PEFT', 'Unsloth', 'llama.cpp', 'CuPy', 'Nsight Compute'],
   },
   {
     category: 'AI Domains',
-    items: ['NLP', 'Computer Vision', 'Deep Learning', 'LLM Fine-Tuning'],
+    items: ['NLP', 'Deep Learning', 'LLM Fine-Tuning'],
   },
   {
-    category: 'Security',
-    items: ['Prompt Injection', 'Jailbreaking', 'PII Extraction', 'Alignment Analysis'],
+    category: 'Adversarial Methods',
+    items: ['Prompt Injection', 'Jailbreak Evaluation', 'Vajra Morphing', 'Supply Chain Attacks', 'Membership Inference', 'Responsible Disclosure'],
+  },
+  {
+    category: 'Hardware & Systems',
+    items: ['RTX 5060 Blackwell', 'CUDA 12.6', 'Activation Sparsity', 'Sparse Matrix Operations', 'Warp Divergence Analysis', 'Kernel Optimization'],
   },
   {
     category: 'Tools',
-    items: ['Linux', 'Git', 'CUDA', 'OpenCV', 'Next.js', 'React'],
+    items: ['Linux', 'Git', 'CUDA', 'FastAPI', 'Docker'],
   },
 ];
 
