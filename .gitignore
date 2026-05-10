@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+.env
+api-keys.json
+config.js
